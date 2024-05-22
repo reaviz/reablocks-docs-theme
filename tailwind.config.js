@@ -14,8 +14,7 @@ module.exports = {
   prefix: 'nx-',
   content: [
     './src/**/*.tsx',
-    '../nextra/src/icons/*.tsx',
-    '../nextra/src/components/*.tsx'
+    './node_modules/nextra/dist/**/*.{js,mjs}',
   ],
   theme: {
     screens: {
