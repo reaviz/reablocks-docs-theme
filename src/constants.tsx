@@ -292,7 +292,7 @@ export const DEFAULT_THEME: DocsThemeConfig = {
     icon: (
       <>
         <GitHubIcon />
-        <span className="nx-sr-only">GitHub</span>
+        <span className="nx-sr-only" suppressHydrationWarning>GitHub</span>
       </>
     )
   },

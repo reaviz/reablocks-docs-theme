@@ -61,6 +61,7 @@ function NavbarMenu({
                   href={
                     item.href || routes[key]?.route || menu.route + '/' + key
                   }
+                  suppressHydrationWarning
                   className={cn(
                     'nx-relative nx-hidden nx-w-full nx-select-none nx-whitespace-nowrap nx-text-gray-600 hover:nx-text-gray-900 dark:nx-text-gray-400 dark:hover:nx-text-gray-100 md:nx-inline-block',
                     'nx-py-1.5 nx-transition-colors ltr:nx-pl-3 ltr:nx-pr-9 rtl:nx-pr-3 rtl:nx-pl-9'
