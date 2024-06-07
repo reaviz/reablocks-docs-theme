@@ -1,6 +1,6 @@
 {
   "name": "reablocks-docs-theme",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "A Nextra theme for documentation reablocks site.",
   "repository": "https://github.com/reaviz/reablocks-docs-theme",
   "license": "MIT",
