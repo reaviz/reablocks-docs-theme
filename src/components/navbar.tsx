@@ -97,6 +97,7 @@ export function Navbar({ flatDirectories, items }: NavBarProps): ReactElement {
       <nav className="nx-mx-auto nx-flex nx-h-[var(--nextra-navbar-height)] nx-max-w-[90rem] nx-items-center nx-justify-end nx-gap-2 nx-pl-[max(env(safe-area-inset-left),1.5rem)] nx-pr-[max(env(safe-area-inset-right),1.5rem)]">
         {config.logoLink ? (
           <Anchor
+            suppressHydrationWarning
             href={typeof config.logoLink === 'string' ? config.logoLink : '/'}
             className="nx-flex nx-items-center hover:nx-opacity-75 ltr:nx-mr-auto rtl:nx-ml-auto"
           >
@@ -147,6 +148,7 @@ export function Navbar({ flatDirectories, items }: NavBarProps): ReactElement {
             <Anchor
               href={href}
               key={href}
+              suppressHydrationWarning
               className={cn(
                 classes.link,
                 'nx-relative -nx-ml-2 nx-hidden nx-whitespace-nowrap nx-p-2 md:nx-inline-block',
@@ -155,7 +157,7 @@ export function Navbar({ flatDirectories, items }: NavBarProps): ReactElement {
               newWindow={page.newWindow}
               aria-current={!page.newWindow && isActive}
             >
-              <span className="nx-absolute nx-inset-x-0 nx-text-center">
+              <span suppressHydrationWarning className="nx-absolute nx-inset-x-0 nx-text-center">
                 {page.title}
               </span>
               <span className="nx-invisible nx-font-medium">{page.title}</span>
@@ -173,6 +175,7 @@ export function Navbar({ flatDirectories, items }: NavBarProps): ReactElement {
             className="nx-p-2 nx-text-current"
             href={config.project.link}
             newWindow
+            suppressHydrationWarning
           >
             {renderComponent(config.project.icon)}
           </Anchor>
@@ -183,6 +186,7 @@ export function Navbar({ flatDirectories, items }: NavBarProps): ReactElement {
             className="nx-p-2 nx-text-current"
             href={config.chat.link}
             newWindow
+            suppressHydrationWarning
           >
             {renderComponent(config.chat.icon)}
           </Anchor>
@@ -193,6 +197,7 @@ export function Navbar({ flatDirectories, items }: NavBarProps): ReactElement {
         <button
           type="button"
           aria-label="Menu"
+          suppressHydrationWarning
           className="nextra-hamburger -nx-mr-2 nx-rounded nx-p-2 active:nx-bg-gray-400/20 md:nx-hidden"
           onClick={() => setMenu(!menu)}
         >
