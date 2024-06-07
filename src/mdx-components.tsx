@@ -46,6 +46,7 @@ function HeadingLink({
 
   return (
     <Tag
+      suppressHydrationWarning
       className={
         // can be added by footnotes
         className === 'sr-only'
