@@ -91,7 +91,7 @@ const DEFAULT_COMPONENTS = getNextraMDXComponents({
     }))
     return (
       <div
-        className="x:mx-auto x:flex x:md:max-w-(--nextra-content-width) x:max-w-screen"
+        className="x:mx-auto x:flex x:md:max-w-(--nextra-content-width) x:max-w-screen x:mt-(--nextra-navbar-height)"
         // Attach user-defined props to wrapper container, e.g. `data-pagefind-filter`
         {...props}
       >
