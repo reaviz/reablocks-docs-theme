@@ -63,7 +63,7 @@ export const Navbar: FC<NavbarProps> = props => {
       <nav
         style={{ height: 'var(--nextra-navbar-height)' }}
         className={cn(
-          'x:mx-auto x:flex x:max-w-(--nextra-content-width) x:items-center x:gap-4 x:pl-[max(env(safe-area-inset-left),1.5rem)] x:pr-[max(env(safe-area-inset-right),1.5rem)]',
+          'x:mx-auto x:flex x:md:max-w-(--nextra-content-width) x:max-w-screen x:items-center x:gap-4 x:pl-[max(env(safe-area-inset-left),1.5rem)] x:pr-[max(env(safe-area-inset-right),1.5rem)]',
           'x:justify-end',
           className
         )}
