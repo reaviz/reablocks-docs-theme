@@ -9,6 +9,7 @@ import { cn } from '../../utils';
 
 export interface LandingFooterProps {
   logo: ReactNode;
+  libName: string;
   className?: string;
   responsiveContainerClassName?: string;
 }
@@ -17,6 +18,7 @@ export const LandingFooter: FC<LandingFooterProps> = ({
   logo,
   className,
   responsiveContainerClassName,
+  libName
 }) => {
   return (
     <div className={cn('w-full justify-center items-center font-inter', className)}>
@@ -26,7 +28,7 @@ export const LandingFooter: FC<LandingFooterProps> = ({
           Made with ❤️ by{' '}
           <Link
             className='text-primary underline'
-            href='https://goodcode.us?utm_source=reagraph'
+            href={`https://goodcode.us?utm_source=${libName}`}
           >
             Good Code
           </Link>
@@ -56,7 +58,7 @@ export const LandingFooter: FC<LandingFooterProps> = ({
         Made with ❤️ by{' '}
         <Link
           className='text-primary underline'
-          href='https://goodcode.us?utm_source=reagraph'
+          href={`https://goodcode.us?utm_source=${libName}`}
         >
           Good Code
         </Link>

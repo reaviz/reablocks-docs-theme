@@ -11,6 +11,7 @@ interface StoryRendererProps {
   storyModule: any;
   storyName: string;
   storyPath: string;
+  storybookUrl: string;
   storybookKey?: string;
 }
 
@@ -54,7 +55,8 @@ export const StoryRenderer: FC<StoryRendererProps> = ({
   storyModule, 
   storyName, 
   storyPath, 
-  storybookKey 
+  storybookKey,
+  storybookUrl
 }) => {
   const { setTheme, ...rest } = useTheme();
   const [isSourceExpanded, setIsSourceExpanded] = useState(false);
@@ -122,7 +124,7 @@ export const StoryRenderer: FC<StoryRendererProps> = ({
             {storybookKey && (
               <Link
                 className={BUTTON_CLASSNAME}
-                href={`https://storybook.reablocks.dev/?path=/story/${storybookKey}`}
+                href={`${storybookUrl}?path=/story/${storybookKey}`}
                 target="_blank"
               >
                 View Storybook
