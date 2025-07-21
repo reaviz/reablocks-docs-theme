@@ -48,7 +48,7 @@ export const Navbar: FC<NavbarProps> = props => {
   return (
     <header
       className={cn(
-        'nextra-navbar x:fixed x:top-0 x:z-30 x:w-full x:bg-transparent x:print:hidden',
+        'nextra-navbar x:sticky x:top-0 x:z-30 x:w-full x:bg-transparent x:print:hidden',
         'x:max-md:[.nextra-banner:not([class$=hidden])~&]:top-(--nextra-banner-height)'
       )}
     >

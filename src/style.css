@@ -15,6 +15,7 @@
 @import '../css/typesetting-article.css';
 
 @theme {
+  --x-tracking-tight: -.015em;
 }
 
 @utility nextra-focus {
