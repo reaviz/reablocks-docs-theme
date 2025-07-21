@@ -74,29 +74,32 @@ export const StoryRenderer: FC<StoryRendererProps> = ({
   }
 
   const renderStory = () => {
-    if (story.render) {
-      return story.render(story.args || {}, {
-        loaded: {},
-        parameters: {}
-      });
-    } else if (story.args && defaultExport && defaultExport.component) {
-      const Component = defaultExport.component;
-      return <Component {...story.args} />;
-    } else if (typeof story === 'function') {
-      const args = story.args || {};
-      return story(args);
-    } else {
+    try {
+      if (story.render) {
+        return story.render(story.args || {}, {
+          loaded: {},
+          parameters: {}
+        });
+      }
+      
+      if (story.args && defaultExport && defaultExport.component) {
+        const Component = defaultExport.component;
+        return <Component {...story.args} />;
+      }
+      
+      if (typeof story === 'function') {
+        const args = story.args || {};
+        return story(args);
+      }
+      
       return <div>Invalid story format: {storyName}</div>;
+    } catch (error) {
+      console.error('Error rendering story:', error);
+      return <div>Error rendering story: {storyName}</div>;
     }
   };
 
-  let renderedComponent;
-  try {
-    renderedComponent = renderStory();
-  } catch (error) {
-    console.error('Error rendering story:', error);
-    renderedComponent = <div>Error rendering story: {storyName}</div>;
-  }
+  const renderedComponent = renderStory();
 
   return (
     <ThemeProvider theme={theme}>
