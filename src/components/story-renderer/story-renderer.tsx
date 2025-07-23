@@ -108,12 +108,12 @@ export const StoryRenderer: FC<StoryRendererProps> = ({
     <ThemeProvider theme={theme}>
       <div className='story-container story-preview x:border-gray-200 x:mt-5 x:mb-4 x:rounded-sm x:border x:bg-white x:dark:bg-transparent x:dark:border-gray-800'>
         <div
-          className={`x:align-center x:align-items-center x:align-content-center x:flex x:w-full x:flex-wrap x:items-center x:justify-center x:justify-items-center x:px-6 x:py-10 ${wrapperClassName}`}
+          className={`x:align-center x:align-items-center x:align-content-center x:flex x:w-full x:flex-wrap x:items-center x:justify-center x:justify-items-center x:px-6 x:py-6 ${wrapperClassName}`}
         >
           <StoryWrapper key={`${storyPath}-${storyName}`} />
         </div>
         <div className='x:flex x:w-full x:justify-end'>
-          <div className='x:-mt-6 x:flex x:items-center x:gap-0'>
+          <div className='x:flex x:items-center x:gap-0'>
             <button
               onClick={() => setIsSourceExpanded(!isSourceExpanded)}
               className={BUTTON_CLASSNAME}
