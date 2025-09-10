@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { readFileSync } from 'fs';
-import { join } from 'path';
 
 /**
  * Extracts the component name from the story file
@@ -147,11 +146,7 @@ const generateCSFStorySource = (componentName: string, args: string): string => 
   return `() => <${componentName}${propsString} />;`;
 };
 
-export const getStorySource = async (request: NextRequest) => {
-  const { searchParams } = new URL(request.url);
-  const storyPath = searchParams.get('storyPath');
-  const functionName = searchParams.get('functionName');
-
+export const getStorySource = async (storyPath: string, functionName: string) => {
   if (!storyPath || !functionName) {
     return NextResponse.json(
       { error: 'Missing storyPath or functionName parameter' },
@@ -161,8 +156,7 @@ export const getStorySource = async (request: NextRequest) => {
 
   try {
     // Read the story file from the filesystem
-    const filePath = join(process.cwd(), 'src', 'stories', storyPath);
-    const fileContent = readFileSync(filePath, 'utf-8');
+    const fileContent = readFileSync(storyPath, 'utf-8');
 
     // Extract component name from default export
     const componentName = extractComponentName(fileContent);
