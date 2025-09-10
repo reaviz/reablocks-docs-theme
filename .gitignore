@@ -129,6 +129,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+.idea
 
 .DS_Store
 tsup.config.bundled*
