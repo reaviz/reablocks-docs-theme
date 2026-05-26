@@ -2,7 +2,7 @@
   "name": "esbuild-react-compiler-plugin",
   "version": "0.0.0",
   "type": "module",
-  "description": "",
+  "description": "Internal esbuild plugin that runs the React Compiler (babel-plugin-react-compiler, via the react-compiler-webpack loader) during the tsup build of reablocks-docs-theme. Imported from source by tsup.config.ts; never published.",
   "author": "Dimitri POSTOLOV",
   "license": "ISC",
   "private": true,
@@ -20,8 +20,8 @@
     "types:check": "tsc --noEmit"
   },
   "dependencies": {
-    "babel-plugin-react-compiler": "0.0.0-experimental-22c6e49-20241219",
-    "react-compiler-webpack": "0.2.0"
+    "babel-plugin-react-compiler": "^19.1.0-rc.2",
+    "react-compiler-webpack": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "^22.10.2"
