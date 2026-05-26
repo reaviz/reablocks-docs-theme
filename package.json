@@ -19,7 +19,6 @@
   "scripts": {
     "build": "NODE_ENV=production tsup",
     "dev": "tsup --watch . --watch ../nextra/src --watch ../nextra/styles",
-    "prepublishOnly": "npm build",
     "test": "vitest run",
     "types:check": "tsc --noEmit"
   },
