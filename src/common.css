@@ -22,6 +22,27 @@ body {
   --tooltip-border-radius: 5px;
 }
 
+html.dark body {
+  background:
+    radial-gradient(1200px 700px at 50% -10%,
+      rgba(16,94,255,0.22) 0%,
+      rgba(16,94,255,0.06) 35%,
+      transparent 70%) center top / 100% auto no-repeat fixed,
+    radial-gradient(900px 600px at 85% 38%,
+      rgba(0,197,240,0.08) 0%,
+      transparent 65%) center / 100% 100% no-repeat fixed,
+    radial-gradient(900px 600px at 12% 75%,
+      rgba(108,76,255,0.08) 0%,
+      transparent 65%) center / 100% 100% no-repeat fixed,
+    radial-gradient(circle, rgba(255,255,255,0.045) 1px, transparent 1.4px) 0 0 / 28px 28px,
+    linear-gradient(180deg, #11111F 0%, #0E0E1A 50%, #0C0C16 100%) center / 100% 100% no-repeat fixed !important;
+}
+
+html.dark .nextra-nav-container > nav {
+  background-color: transparent !important;
+  backdrop-filter: blur(8px);
+}
+
 .nextra-nav-container > nav {
   background-color: var(--background) !important;
 }
