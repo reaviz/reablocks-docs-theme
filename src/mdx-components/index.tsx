@@ -113,7 +113,9 @@ const DEFAULT_COMPONENTS = getNextraMDXComponents({
   }
 })
 
-export const useMDXComponents = (components?: Readonly<MDXComponents>) => {
+export const useMDXComponents = (
+  components?: Readonly<MDXComponents>
+): MDXComponents => {
   return {
     ...DEFAULT_COMPONENTS,
     ...components

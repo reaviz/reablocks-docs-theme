@@ -4,11 +4,17 @@ import { usePathname } from 'next/navigation'
 import type { FC, ReactNode } from 'react'
 import { useThemeConfig } from '../stores'
 
-export const LastUpdated: FC<{
+export interface LastUpdatedProps {
   date?: Date
   children?: ReactNode
   locale?: string
-}> = ({ date, children = 'Last updated on', locale = 'en' }) => {
+}
+
+export const LastUpdated: FC<LastUpdatedProps> = ({
+  date,
+  children = 'Last updated on',
+  locale = 'en'
+}) => {
   const { i18n } = useThemeConfig()
   const pathname = usePathname()
 

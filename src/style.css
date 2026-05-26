@@ -15,6 +15,7 @@
 
 @import '../css/hamburger.css';
 @import '../css/typesetting-article.css';
+@import '../css/tsdoc.css';
 
 @theme {
   --x-tracking-tight: -.015em;
