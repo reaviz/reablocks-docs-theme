@@ -11,11 +11,11 @@ import { MobileNav } from './components/sidebar'
 import { ConfigProvider, ThemeConfigProvider } from './stores'
 
 const attributeSchema = z.custom<'class' | `data-${string}`>(
-  value => value === 'class' || value.startsWith('data-')
+  value => typeof value === 'string' && (value === 'class' || value.startsWith('data-'))
 )
 
 const theme = z.strictObject({
-  banner: reactNode,
+  banner: reactNode.optional(),
   darkMode: z.boolean().default(true),
   docsRepositoryBase: z
     .string()
@@ -27,7 +27,7 @@ const theme = z.strictObject({
       content: reactNode.default('Question? Give us feedback'),
       labels: z.string().default('feedback')
     })
-    .default({}),
+    .prefault({}),
   footer: reactNode,
   i18n: z
     .array(
@@ -74,8 +74,8 @@ import { Layout, LastUpdated } from 'nextra-theme-docs'
       forcedTheme: z.string().optional(),
       storageKey: z.string().optional()
     })
-    .default({}),
-  pageMap: z.array(z.any({})),
+    .prefault({}),
+  pageMap: z.array(z.any()),
   search: reactNode.default(<Search />),
   sidebar: z
     .strictObject({
@@ -84,22 +84,22 @@ import { Layout, LastUpdated } from 'nextra-theme-docs'
       defaultOpen: z.boolean().default(true),
       toggleButton: z.boolean().default(true)
     })
-    .default({}),
+    .prefault({}),
   themeSwitch: z
     .strictObject({
       dark: z.string().default('Dark'),
       light: z.string().default('Light'),
       system: z.string().default('System')
     })
-    .default({}),
+    .prefault({}),
   toc: z
     .strictObject({
       backToTop: reactNode.default('Scroll to top'),
-      extraContent: reactNode,
+      extraContent: reactNode.optional(),
       float: z.boolean().default(true),
       title: reactNode.default('On This Page')
     })
-    .default({})
+    .prefault({})
 })
 
 export type ThemeConfigProps = z.infer<typeof theme>

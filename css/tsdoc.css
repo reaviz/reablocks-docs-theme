@@ -1,0 +1,175 @@
+/* ---------------------------------------------------------------------------
+ * TSDoc props table
+ * Overrides Nextra's default styling so the prop tables match the docs theme.
+ *
+ * Required custom properties (must be defined on :root by the consumer):
+ *   --color-rb-fg-1          Primary foreground (table cell code text)
+ *   --color-rb-fg-2          Secondary foreground (description text)
+ *   --color-rb-fg-3          Tertiary foreground (column headers)
+ *   --color-rb-fg-muted      Muted foreground (anchor link, em-dash placeholder)
+ *   --color-rb-bg-1          Base background (nested pre blocks)
+ *   --color-rb-surface-2     Elevated surface (inline code background)
+ *   --color-rb-hairline      Hairline border color
+ *   --color-rb-cat-elements  Accent color (first-column pill, anchor hover);
+ *                            row hover and pill tints are derived from this
+ *                            via color-mix() so a single token re-themes both.
+ *   --font-mono              Monospace stack (inline code)
+ * ------------------------------------------------------------------------- */
+
+.tsdoc-props {
+  margin: 1.5rem 0;
+}
+
+.tsdoc-props table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 !important;
+  font-size: 0.8125rem;
+  table-layout: fixed;
+}
+
+/* Override Nextra's responsive table reset so the table renders as a real
+ * table on tablet/desktop instead of the stacked card layout it defaults to. */
+@media (min-width: 768px) {
+  .tsdoc-props thead {
+    display: table-header-group !important;
+  }
+  .tsdoc-props tbody tr {
+    display: table-row !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+  .tsdoc-props tbody td {
+    display: table-cell !important;
+  }
+  .tsdoc-props tbody td::before {
+    content: none !important;
+  }
+}
+
+.tsdoc-props thead th {
+  text-align: left;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.6875rem;
+  color: var(--color-rb-fg-3);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-rb-hairline);
+  background: transparent !important;
+}
+
+.tsdoc-props thead th:first-child {
+  width: 26%;
+}
+
+.tsdoc-props thead th:nth-child(3) {
+  width: 18%;
+}
+
+.tsdoc-props tbody tr {
+  border-top: 1px solid var(--color-rb-hairline);
+  transition: background-color 120ms ease;
+}
+
+.tsdoc-props tbody tr:first-child {
+  border-top: none;
+}
+
+.tsdoc-props tbody tr:hover {
+  background: color-mix(in srgb, var(--color-rb-cat-elements) 5%, transparent) !important;
+}
+
+.tsdoc-props tbody td {
+  vertical-align: top;
+  padding: 0.875rem 1rem !important;
+}
+
+.tsdoc-props code {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background: var(--color-rb-surface-2);
+  border: 1px solid var(--color-rb-hairline);
+  padding: 0.125rem 0.5rem;
+  border-radius: 6px;
+  color: var(--color-rb-fg-1);
+  font-weight: 400;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+.tsdoc-props tbody td:first-child code {
+  background: color-mix(in srgb, var(--color-rb-cat-elements) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-rb-cat-elements) 28%, transparent);
+  color: var(--color-rb-cat-elements);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tsdoc-props tbody td > div {
+  margin-top: 0.5rem;
+  color: var(--color-rb-fg-2);
+  line-height: 1.6;
+  font-size: 0.8125rem;
+}
+
+.tsdoc-props tbody td > div pre {
+  margin: 0.625rem 0 0 !important;
+  padding: 0.75rem 0.875rem !important;
+  background: var(--color-rb-bg-1) !important;
+  border: 1px solid var(--color-rb-hairline) !important;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  overflow-x: auto;
+  box-shadow: none !important;
+}
+
+.tsdoc-props tbody td > div pre code {
+  display: block;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: pre;
+  overflow-wrap: normal;
+  max-width: none;
+}
+
+.tsdoc-props tbody td > div pre code .line,
+.tsdoc-props tbody td > div pre > code > span {
+  display: block;
+}
+
+.tsdoc-props tbody td a[href^="#"] {
+  position: static !important;
+  display: inline-block;
+  margin-right: 0.375rem;
+  padding: 0 !important;
+  width: 0.875rem;
+  color: var(--color-rb-fg-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  opacity: 0;
+  transform: none !important;
+  transition: opacity 120ms ease, color 120ms ease;
+}
+
+.tsdoc-props tbody tr:hover td a[href^="#"],
+.tsdoc-props tbody tr:focus-within td a[href^="#"] {
+  opacity: 1;
+}
+
+.tsdoc-props tbody td a[href^="#"]:hover {
+  color: var(--color-rb-cat-elements);
+}
+
+.tsdoc-props tbody td:nth-child(3):empty::after {
+  content: '—';
+  color: var(--color-rb-fg-muted);
+}

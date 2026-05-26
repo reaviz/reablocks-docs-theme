@@ -11,7 +11,8 @@ import type {
   ComponentProps,
   FC,
   FocusEventHandler,
-  MouseEventHandler
+  MouseEventHandler,
+  ReactNode
 } from 'react'
 import { forwardRef, useEffect, useId, useRef, useState } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
@@ -189,7 +190,7 @@ function getMenuChildren(menu: MenuItem) {
     }))
 }
 
-const Separator: FC<{ title: string }> = ({ title }) => {
+const Separator: FC<{ title: ReactNode }> = ({ title }) => {
   return (
     <li
       className={cn(

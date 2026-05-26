@@ -2,16 +2,15 @@
 
 import cn from 'clsx'
 import type { MDXWrapper } from 'nextra'
-import type { ComponentProps, FC } from 'react'
+import type { ComponentProps, FC, ReactElement } from 'react'
 import { cloneElement } from 'react'
 import { Breadcrumb, Pagination, TOC } from '../components'
+import type { LastUpdatedProps } from '../components/last-updated'
 import { useConfig, useThemeConfig } from '../stores'
 
-export const ClientWrapper: FC<Omit<ComponentProps<MDXWrapper>, 'toc'>> = ({
-  children,
-  metadata,
-  bottomContent
-}) => {
+export const ClientWrapper: FC<
+  Omit<ComponentProps<MDXWrapper>, 'toc' | 'sourceCode'>
+> = ({ children, metadata, bottomContent }) => {
   const {
     activeType,
     activeThemeContext: themeContext,
@@ -46,7 +45,10 @@ export const ClientWrapper: FC<Omit<ComponentProps<MDXWrapper>, 'toc'>> = ({
         {children}
         {date ? (
           <div className="x:mt-12 x:mb-8 x:text-xs x:text-gray-500 x:text-end x:dark:text-gray-400">
-            {cloneElement(themeConfig.lastUpdated, { date: new Date(date) })}
+            {cloneElement(
+              themeConfig.lastUpdated as ReactElement<LastUpdatedProps>,
+              { date: new Date(date) }
+            )}
           </div>
         ) : (
           <div className="x:mt-16" />

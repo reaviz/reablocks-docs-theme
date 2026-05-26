@@ -14,5 +14,5 @@
     "types": ["vitest/globals"],
     "noUncheckedIndexedAccess": true
   },
-  "exclude": ["dist"]
+  "exclude": ["dist", "setup-files.ts"]
 }

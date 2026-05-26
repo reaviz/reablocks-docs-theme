@@ -6,11 +6,14 @@ import { normalizePages } from 'nextra/normalize-pages'
 import type { FC, ReactNode } from 'react'
 import { createContext, useContext } from 'react'
 
-const ConfigContext = createContext<ReturnType<typeof normalizePages> | null>(
-  null
-)
+type NormalizePagesResult = ReturnType<typeof normalizePages>
 
-export function useConfig() {
+const ConfigContext = createContext<NormalizePagesResult | null>(null)
+
+export function useConfig(): {
+  normalizePagesResult: NormalizePagesResult
+  hideSidebar: boolean
+} {
   const normalizePagesResult = useContext(ConfigContext)
   if (!normalizePagesResult) {
     throw new Error('Missing ConfigContext.Provider')
