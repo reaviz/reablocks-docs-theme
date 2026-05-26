@@ -1,6 +1,6 @@
 {
   "name": "reablocks-docs-theme",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "A Nextra theme for documentation reablocks site.",
   "repository": "https://github.com/reaviz/reablocks-docs-theme",
   "license": "MIT",
@@ -69,6 +69,7 @@
     "react-compiler-webpack": "^1.0.1",
     "tailwindcss": "^4.1.10",
     "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
     "vitest": "^3.0.0",
     "zx": "^8.2.4"
   },
