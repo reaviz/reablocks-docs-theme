@@ -1,12 +1,16 @@
 {
   "name": "reablocks-docs-theme",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "A Nextra theme for documentation reablocks site.",
   "repository": "https://github.com/reaviz/reablocks-docs-theme",
   "license": "MIT",
   "exports": {
     "./style.css": "./dist/style.css",
     "./style-prefixed.css": "./dist/style-prefixed.css",
+    "./tsdoc": {
+      "types": "./dist/tsdoc/index.d.mts",
+      "import": "./dist/tsdoc/index.js"
+    },
     ".": {
       "types": "./dist/index.d.mts",
       "import": "./dist/index.js"
@@ -47,6 +51,7 @@
     "react-syntax-highlighter": "^15.6.1",
     "scroll-into-view-if-needed": "^3.1.0",
     "tailwind-merge": "^3.3.1",
+    "ts-morph": "^27.0.2",
     "zod": "^4.4.3",
     "zod-validation-error": "^5.0.0",
     "zustand": "^5.0.1"

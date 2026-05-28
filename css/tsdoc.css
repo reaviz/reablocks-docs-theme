@@ -2,7 +2,7 @@
  * TSDoc props table
  * Overrides Nextra's default styling so the prop tables match the docs theme.
  *
- * Required custom properties (must be defined on :root by the consumer):
+ * Consumer-overridable tokens (defaults below; redefine on :root to retheme):
  *   --color-rb-fg-1          Primary foreground (table cell code text)
  *   --color-rb-fg-2          Secondary foreground (description text)
  *   --color-rb-fg-3          Tertiary foreground (column headers)
@@ -10,11 +10,24 @@
  *   --color-rb-bg-1          Base background (nested pre blocks)
  *   --color-rb-surface-2     Elevated surface (inline code background)
  *   --color-rb-hairline      Hairline border color
+ *   --color-rb-bad           Required-prop "*" marker
  *   --color-rb-cat-elements  Accent color (first-column pill, anchor hover);
  *                            row hover and pill tints are derived from this
  *                            via color-mix() so a single token re-themes both.
  *   --font-mono              Monospace stack (inline code)
  * ------------------------------------------------------------------------- */
+
+:root {
+  --color-rb-bg-1: #11111F;
+  --color-rb-surface-2: #1C1C2C;
+  --color-rb-fg-1: #F5F6FB;
+  --color-rb-fg-2: #B6BACB;
+  --color-rb-fg-3: #7E839A;
+  --color-rb-fg-muted: #565B73;
+  --color-rb-hairline: rgba(255, 255, 255, 0.07);
+  --color-rb-bad: #F87171;
+  --color-rb-cat-elements: #3B7BFF;
+}
 
 .tsdoc-props {
   margin: 1.5rem 0;
@@ -61,12 +74,14 @@
   background: transparent !important;
 }
 
-.tsdoc-props thead th:first-child {
-  width: 26%;
+.tsdoc-props th:first-child,
+.tsdoc-props td:first-child {
+  width: 22% !important;
 }
 
-.tsdoc-props thead th:nth-child(3) {
-  width: 18%;
+.tsdoc-props th:nth-child(3),
+.tsdoc-props td:nth-child(3) {
+  width: 26% !important;
 }
 
 .tsdoc-props tbody tr {
@@ -172,4 +187,18 @@
 .tsdoc-props tbody td:nth-child(3):empty::after {
   content: '—';
   color: var(--color-rb-fg-muted);
+}
+
+/* Required-prop marker.
+ * Nextra adds `after:content-["?"]` to optional name <code>s; the absence of
+ * that class means the prop is required, so we paint a red "*" after it. */
+.tsdoc-props tbody td:first-child code:not([class*="after:content"])::after {
+  content: '*';
+  margin-left: 0.15em;
+  color: var(--color-rb-bad, #ef4444);
+  font-weight: 700;
+  font-size: 0.85em;
+  vertical-align: super;
+  line-height: 0;
+  user-select: none;
 }
