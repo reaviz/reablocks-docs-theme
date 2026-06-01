@@ -2,6 +2,15 @@ import { NextResponse } from 'next/server';
 import { readFileSync } from 'fs';
 
 /**
+ * Escapes regex metacharacters so a dynamic value (e.g. an export name) can be
+ * interpolated into a `RegExp` literally without breaking the pattern.
+ * @param value - The raw string to escape
+ * @returns The string with all regex special characters backslash-escaped
+ */
+const escapeRegExp = (value: string): string =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/**
  * Extracts the component name from the story file
  * @param fileContent - The content of the story file
  * @returns The component name
@@ -161,9 +170,13 @@ export const getStorySource = async (storyPath: string, functionName: string) =>
     // Extract component name from default export
     const componentName = extractComponentName(fileContent);
 
+    // Escape the export name before interpolating it into any RegExp so names
+    // with regex metacharacters can't break or alter the patterns below.
+    const escapedName = escapeRegExp(functionName);
+
     // Try to extract as function first (arrow function format)
     const functionRegex = new RegExp(
-      `export\\s+const\\s+${functionName}\\s*=\\s*\\([^)]*\\)\\s*=>\\s*([\\s\\S]*?)(?=\\nexport|$)`,
+      `export\\s+const\\s+${escapedName}\\s*=\\s*\\([^)]*\\)\\s*=>\\s*([\\s\\S]*?)(?=\\nexport|$)`,
       'g'
     );
 
@@ -183,7 +196,7 @@ export const getStorySource = async (storyPath: string, functionName: string) =>
 
     // Try to extract as CSF story object (Storybook format)
     // Use a more precise approach to capture the entire story object
-    const storyPattern = `export\\s+const\\s+${functionName}\\s*:[^=]*=\\s*\\{`;
+    const storyPattern = `export\\s+const\\s+${escapedName}\\s*:[^=]*=\\s*\\{`;
     const storyStartMatch = fileContent.match(new RegExp(storyPattern));
 
     let storyObject = '';
@@ -231,7 +244,7 @@ export const getStorySource = async (storyPath: string, functionName: string) =>
     // Fallback regex without type annotation
     if (!objectFound) {
       const fallbackRegex = new RegExp(
-        `export\\s+const\\s+${functionName}\\s*=\\s*\\{([\\s\\S]*?)\\}\\s*;?`,
+        `export\\s+const\\s+${escapedName}\\s*=\\s*\\{([\\s\\S]*?)\\}\\s*;?`,
         'g'
       );
       const objectMatch = fallbackRegex.exec(fileContent);
@@ -366,6 +379,68 @@ export const getStorySource = async (storyPath: string, functionName: string) =>
       }
 
       // Story object without args or render function - fallback
+      const result = `(args) => <${componentName} {...args} />;`;
+      return NextResponse.json({ source: result });
+    }
+
+    // Try to extract as Storybook CSF1 Template.bind({}) pattern:
+    //   const Template = (args) => <Component {...args} />;
+    //   export const Basic = Template.bind({});
+    //   Basic.args = { ... };
+    const bindRegex = new RegExp(
+      `export\\s+const\\s+${escapedName}\\s*(?::[^=]+)?=\\s*[A-Za-z_$][A-Za-z0-9_$]*\\s*\\.bind\\s*\\(`
+    );
+    if (bindRegex.test(fileContent)) {
+      const argsAssignment = new RegExp(
+        `${escapedName}\\.args\\s*=\\s*\\{`
+      ).exec(fileContent);
+
+      if (argsAssignment) {
+        const startIndex = argsAssignment.index + argsAssignment[0].length - 1;
+        let braceCount = 0;
+        let endIndex = -1;
+        let inString = false;
+        let stringChar = '';
+
+        for (let i = startIndex; i < fileContent.length; i++) {
+          const char = fileContent[i];
+
+          // Inside a string, a backslash escapes the next character — skip
+          // both so an escaped quote (`\"`) or escaped backslash (`\\`) before
+          // a quote doesn't get mistaken for a string terminator.
+          if (inString && char === '\\') {
+            i++;
+            continue;
+          }
+
+          if (!inString && (char === '"' || char === "'" || char === '`')) {
+            inString = true;
+            stringChar = char;
+          } else if (inString && char === stringChar) {
+            inString = false;
+          } else if (!inString) {
+            if (char === '{') {
+              braceCount++;
+            } else if (char === '}') {
+              braceCount--;
+              if (braceCount === 0) {
+                endIndex = i;
+                break;
+              }
+            }
+          }
+        }
+
+        if (endIndex !== -1) {
+          const argsContent = fileContent.substring(startIndex + 1, endIndex).trim();
+          const result = argsContent
+            ? generateCSFStorySource(componentName, argsContent)
+            : `(args) => <${componentName} {...args} />;`;
+          return NextResponse.json({ source: result });
+        }
+      }
+
+      // bind() match but no .args assignment found — fall back to spread template
       const result = `(args) => <${componentName} {...args} />;`;
       return NextResponse.json({ source: result });
     }

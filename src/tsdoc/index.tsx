@@ -1,6 +1,9 @@
 import { generateDefinition, TSDoc } from 'nextra/tsdoc';
 import type { FC } from 'react';
+import { escapeDefinitionDescriptions } from './escape-mdx';
 import { getOwnPropertyNames } from './own-props';
+
+export { escapeMdxBraces, escapeDefinitionDescriptions } from './escape-mdx';
 
 export { getOwnPropertyNames } from './own-props';
 export type { GetOwnPropertyNamesArgs } from './own-props';
@@ -109,7 +112,10 @@ export { _ResolvedProps as default };`;
 
     return (
       <div className="tsdoc-props">
-        <TSDoc definition={resolvedDefinition} typeLinkMap={SAFE_TYPE_LINK_MAP} />
+        <TSDoc
+          definition={escapeDefinitionDescriptions(resolvedDefinition)}
+          typeLinkMap={SAFE_TYPE_LINK_MAP}
+        />
       </div>
     );
   };

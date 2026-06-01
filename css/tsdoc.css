@@ -18,6 +18,10 @@
  * ------------------------------------------------------------------------- */
 
 :root {
+  /* Table panel background. Transparent by default so the table inherits the
+   * page background in both themes; override on a consumer :root to give the
+   * table its own distinct surface. */
+  --color-rb-surface-1: transparent;
   --color-rb-bg-1: #11111F;
   --color-rb-surface-2: #1C1C2C;
   --color-rb-fg-1: #F5F6FB;
@@ -29,8 +33,33 @@
   --color-rb-cat-elements: #3B7BFF;
 }
 
+/* Light theme overrides. The defaults above are tuned for dark backgrounds
+ * (a white hairline, dark surfaces, near-white text), which are invisible /
+ * low-contrast on a light page. Re-point the same tokens to light-appropriate
+ * values so the table borders, surfaces, and text stay legible under
+ * `html.light` (next-themes uses the `class` attribute). */
+html.light,
+html[data-theme='light'] {
+  /* `--color-rb-surface-1` stays `transparent` (inherited from `:root`) so the
+   * table picks up the page background (gray in light mode); code surfaces go
+   * white so they sit raised on it and stay high-contrast. */
+  --color-rb-bg-1: #ffffff;
+  --color-rb-surface-2: #ffffff;
+  --color-rb-fg-1: #1a1b2b; /* code text — ~16:1 on white */
+  --color-rb-fg-2: #4b5066; /* descriptions — ~7:1 on the gray panel */
+  --color-rb-fg-3: #565d7c; /* column headers — ~5.4:1 (AA for small caps) */
+  --color-rb-fg-muted: #6b7090; /* anchors / em-dash — ~4:1 */
+  --color-rb-hairline: rgba(17, 17, 31, 0.12);
+  --color-rb-bad: #dc2626;
+  --color-rb-cat-elements: #2563eb;
+}
+
 .tsdoc-props {
   margin: 1.5rem 0;
+  background-color: var(--color-rb-surface-1);
+  border: 1px solid var(--color-rb-hairline);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .tsdoc-props table {
@@ -51,14 +80,24 @@
     display: table-row !important;
     margin: 0 !important;
     border: 0 !important;
+    border-top: 1px solid var(--color-rb-hairline) !important;
     border-radius: 0 !important;
     background: transparent !important;
+  }
+  /* Header's bottom border already separates the first row. */
+  .tsdoc-props tbody tr:first-child {
+    border-top: 0 !important;
   }
   .tsdoc-props tbody td {
     display: table-cell !important;
   }
   .tsdoc-props tbody td::before {
     content: none !important;
+  }
+  /* Vertical column dividers so the props list reads as a real bordered table. */
+  .tsdoc-props thead th:not(:last-child),
+  .tsdoc-props tbody td:not(:last-child) {
+    border-right: 1px solid var(--color-rb-hairline) !important;
   }
 }
 
